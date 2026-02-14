@@ -14,13 +14,12 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
             Node<T> node = new Node<>(null, value, null);
             head = node;
             tail = node;
-            size++;
         } else {
             Node<T> node = new Node<>(tail, value, null);
             tail.next = node;
             tail = node;
-            size++;
         }
+        size++;
     }
 
     @Override
@@ -31,26 +30,20 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
             Node<T> node = new Node<>(null, value, null);
             head = node;
             tail = node;
-            size++;
         } else if (index == 0) {
             Node<T> node = new Node<>(null, value, head);
             head.prev = node;
             head = node;
-            size++;
         } else if (index == size) {
-            Node<T> node = new Node<>(tail, value, null);
-            tail.next = node;
-            tail = node;
-            size++;
+            add(value);
+            return;
         } else {
-            Node<T> node = new Node<>(null, value, null);
             Node<T> currentNode = findNodeByIndex(index);
-            node.prev = currentNode.prev;
+            Node<T> node = new Node<>(currentNode.prev, value, currentNode);
             currentNode.prev.next = node;
             currentNode.prev = node;
-            node.next = currentNode;
-            size++;
         }
+        size++;
 
     }
 
@@ -80,48 +73,25 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     @Override
     public T remove(int index) {
         indexValidation(index);
-        if (size == 1) {
-            final T removedValue = head.value;
-            unlink(head);
-            return removedValue;
-        } else if (index == 0) {
-            final T removedValue = head.value;
-            unlink(head);
-            return removedValue;
-        } else if (index == (size - 1)) {
-            final T removedValue = tail.value;
-            unlink(tail);
-            return removedValue;
-        } else {
             Node<T> currentNode = findNodeByIndex(index);
             final T removedValue = currentNode.value;
             unlink(currentNode);
             return removedValue;
         }
-    }
 
     @Override
     public boolean remove(T object) {
         Node<T> currentNode = head;
         while (currentNode != null) {
             if (currentNode.value == object
-                    || (currentNode.value != null && currentNode.value.equals(object))) {
+                    || (currentNode.value != null
+                    && currentNode.value.equals(object))) {
                 break;
             }
             currentNode = currentNode.next;
         }
         if (currentNode == null) {
             return false;
-        }
-        if (size == 1) {
-            unlink(currentNode);
-            return true;
-        } else if (currentNode == head) {
-            unlink(currentNode);
-            return true;
-        } else if (currentNode == tail) {
-            unlink(currentNode);
-            return true;
         } else {
             unlink(currentNode);
             return true;
