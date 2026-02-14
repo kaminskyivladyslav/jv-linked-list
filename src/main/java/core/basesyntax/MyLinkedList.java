@@ -73,11 +73,11 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     @Override
     public T remove(int index) {
         indexValidation(index);
-            Node<T> currentNode = findNodeByIndex(index);
-            final T removedValue = currentNode.value;
-            unlink(currentNode);
-            return removedValue;
-        }
+        Node<T> currentNode = findNodeByIndex(index);
+        final T removedValue = currentNode.value;
+        unlink(currentNode);
+        return removedValue;
+    }
 
     @Override
     public boolean remove(T object) {
