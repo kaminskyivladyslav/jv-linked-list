@@ -16,9 +16,8 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
             tail = node;
             size++;
         } else {
-            Node<T> node = new Node<>(null, value, null);
+            Node<T> node = new Node<>(tail, value, null);
             tail.next = node;
-            node.prev = tail;
             tail = node;
             size++;
         }
@@ -34,15 +33,13 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
             tail = node;
             size++;
         } else if (index == 0) {
-            Node<T> node = new Node<>(null, value, null);
+            Node<T> node = new Node<>(null, value, head);
             head.prev = node;
-            node.next = head;
             head = node;
             size++;
         } else if (index == size) {
-            Node<T> node = new Node<>(null, value, null);
+            Node<T> node = new Node<>(tail, value, null);
             tail.next = node;
-            node.prev = tail;
             tail = node;
             size++;
         } else {
@@ -106,7 +103,7 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     @Override
     public boolean remove(T object) {
         Node<T> currentNode = head;
-        while (currentNode != tail.next) {
+        while (currentNode != null) {
             if (currentNode.value == object
                     || (currentNode.value != null && currentNode.value.equals(object))) {
                 break;
